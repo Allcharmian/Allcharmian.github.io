@@ -4,36 +4,234 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Infografía: Teorías del Aprendizaje - Vygotsky y Ausubel</title>
+    
+    <!-- Carga de Tailwind CSS y configuración de colores personalizados -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#003f5c', // Azul oscuro principal
+                        'vygotsky': '#4d80a1', // Azul claro/grisáceo para Vygotsky
+                        'ausubel': '#ff7c43', // Naranja vibrante para Ausubel
+                        'soft-light': '#a7c7dc', // Azul muy claro para fondos/gráficas
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Carga de fuentes y Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f1f5f9;
+            background-color: #f1f5f9; /* Tailwind's gray-100 equivalent */
         }
+        /* Contenedor adaptativo para asegurar que los gráficos se vean bien */
         .chart-container {
             position: relative;
             width: 100%;
-            max-width: 500px;
+            max-width: 400px;
             margin: 0 auto;
-            height: 320px;
+            height: 300px; /* Altura fija para evitar saltos de diseño (CLS) */
         }
     </style>
 </head>
-<body class="text-gray-800">
+<body class="text-gray-800 antialiased">
 
-    <header class="bg-[#003f5c] text-white p-8 text-center shadow-md">
-        <h1 class="text-4xl font-bold mb-2">Teorías del Aprendizaje</h1>
-        <p class="text-lg text-gray-300">Vygotsky y Ausubel desde mi experiencia personal</p>
+    <!-- Encabezado Principal -->
+    <header class="bg-primary text-white p-8 md:p-12 text-center shadow-2xl">
+        <h1 class="text-4xl md:text-5xl font-extrabold mb-2 tracking-tight">Teorías del Aprendizaje</h1>
+        <p class="text-xl text-soft-light">Vygotsky y Ausubel: El Aprendizaje Social y Significativo</p>
     </header>
 
-    <main class="container mx-auto p-6 md:p-10">
+    <main class="container mx-auto p-4 md:p-12 max-w-7xl">
         
-        <section class="text-center mb-10">
-            <h2 class="text-3xl font-bold text-[#003f5c] mb-4">Aprender con otros y dar sentido a lo que aprendemos</h2>
-            <p class="max-w-3xl mx-auto text-lg text-gray-700">
-                En este trabajo analizo dos teorías fundamentales para la psicología educativa. 
+        <!-- Sección Introductoria -->
+        <section class="text-center mb-16 bg-white p-8 rounded-3xl shadow-xl">
+            <h2 class="text-3xl md:text-4xl font-bold text-primary mb-4">Aprender con Otros y Dar Sentido al Conocimiento</h2>
+            <p class="max-w-4xl mx-auto text-lg text-gray-700 leading-relaxed">
+                Este trabajo analiza dos perspectivas fundamentales en la psicología educativa que moldean la forma en que entendemos el proceso de adquisición de conocimiento. Vygotsky subraya la construcción social del aprendizaje, mientras que Ausubel pone el foco en cómo el nuevo conocimiento se integra con nuestras estructuras mentales preexistentes.
+            </p>
+        </section>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+
+            <!-- Vygotsky (Colaboración y ZDP) -->
+            <section class="bg-white rounded-3xl shadow-2xl p-8 border-t-8 border-vygotsky transform hover:scale-[1.01] transition duration-300">
+                <h3 class="text-3xl font-bold text-vygotsky mb-6 flex items-center">
+                    <!-- Icono simple de personas colaborando -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-3" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M16 11c1.66 0 2.99-1.34 2.99-3s-1.33-3-2.99-3c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3s-1.33-3-2.99-3c-1.66 0-3 1.34-3 3s1.34 3 3 3zm8 2h-2c-2.42 0-4.71.74-6.67 2h-1.66C3.58 15 1 17.58 1 20.73V22h22v-1.27c0-3.15-2.58-5.73-6.67-5.73z"/>
+                    </svg>
+                    Lev Vygotsky y la Zona de Desarrollo Próximo
+                </h3>
+                <p class="mb-4 text-gray-700 leading-relaxed">
+                    Vygotsky nos recuerda que el aprendizaje es un fenómeno social y cultural. La interacción con "otros más capaces" (docentes, pares, expertos) es el motor que impulsa el desarrollo cognitivo.
+                </p>
+                <p class="text-gray-700 mb-6 font-semibold leading-relaxed">
+                    La **Zona de Desarrollo Próximo (ZDP)** define la brecha entre lo que podemos hacer solos y lo que podemos lograr con guía. El *andamiaje* (scaffolding) del profesor es clave para que el estudiante cruce esa brecha.
+                </p>
+
+                <div class="chart-container mb-6 p-4 bg-gray-50 rounded-xl shadow-inner">
+                    <canvas id="zdpChart"></canvas>
+                </div>
+
+                <p class="text-gray-700 italic">
+                    Énfasis en la mediación a través del lenguaje como herramienta psicológica fundamental para estructurar el pensamiento.
+                </p>
+            </section>
+
+            <!-- Ausubel (Aprendizaje Significativo) -->
+            <section class="bg-white rounded-3xl shadow-2xl p-8 border-t-8 border-ausubel transform hover:scale-[1.01] transition duration-300">
+                <h3 class="text-3xl font-bold text-ausubel mb-6 flex items-center">
+                    <!-- Icono simple de conexión/anclaje -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-3" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 8h-4v2h4v-2zm-4 7v-2h2v2h-2zm4-7H5c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-5 8c0 1.1-.9 2-2 2h-2c-1.1 0-2-.9-2-2V10c0-1.1.9-2 2-2h2c1.1 0 2 .9 2 2v6z"/>
+                    </svg>
+                    David Ausubel y el Aprendizaje Significativo
+                </h3>
+                <p class="mb-4 text-gray-700 leading-relaxed">
+                    Para Ausubel, la clave está en la comprensión, no en la repetición. El aprendizaje es significativo cuando el nuevo material puede ser *anclado* de manera no arbitraria y sustancial a los conocimientos que ya poseemos.
+                </p>
+                <p class="text-gray-700 mb-6 font-semibold leading-relaxed">
+                    El uso de **Organizadores Previos** es vital, ya que funcionan como puentes cognitivos para activar la estructura mental del estudiante y facilitar la incorporación del nuevo conocimiento.
+                </p>
+
+                <div class="chart-container mb-6 p-4 bg-gray-50 rounded-xl shadow-inner">
+                    <canvas id="learningComparisonChart"></canvas>
+                </div>
+
+                <p class="text-gray-700 italic">
+                    Diferencia clara entre el aprendizaje **significativo** (profundo, duradero) y el **mecánico** (superficial, basado en la memorización sin conexión).
+                </p>
+            </section>
+        </div>
+
+        <!-- Reflexión y Aplicación -->
+        <section class="mt-16 bg-white rounded-3xl shadow-xl p-8">
+            <h2 class="text-3xl font-bold text-center text-primary mb-8">Reflexión y Aplicación Personal</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                <div class="p-6 rounded-2xl bg-soft-light shadow-md">
+                    <h4 class="font-bold text-xl mb-3 text-vygotsky border-b border-vygotsky/50 pb-2">Vigencia de la Colaboración (Vygotsky)</h4>
+                    <p class="text-gray-700">
+                        Las ideas de Vygotsky son el pilar de la educación moderna: el *trabajo en equipo*, las *tutorías entre pares* y el *aprendizaje cooperativo*. Su teoría me recuerda que el progreso individual se logra a través de la interacción social.
+                    </p>
+                </div>
+
+                <div class="p-6 rounded-2xl bg-soft-light shadow-md">
+                    <h4 class="font-bold text-xl mb-3 text-ausubel border-b border-ausubel/50 pb-2">Vigencia del Sentido (Ausubel)</h4>
+                    <p class="text-gray-700">
+                        La teoría de Ausubel nos obliga a los educadores a planificar la enseñanza desde el *contexto* y los *conocimientos previos* del estudiante. Si un contenido no tiene sentido, se olvida; si se conecta, se convierte en aprendizaje real.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Incidente Crítico -->
+            <div class="bg-primary text-white rounded-2xl shadow-xl p-6 text-center border-b-4 border-ausubel">
+                <h4 class="font-bold text-2xl mb-3 text-[#ffa600]">Análisis del Incidente Crítico</h4>
+                <p class="text-lg">
+                    Considerando la influencia del entorno y la necesidad de guía, la teoría de **Vygotsky** (énfasis en la interacción social, la ZDP y la mediación) se aplica de manera más pertinente al analizar situaciones donde el contexto social es el factor crítico del aprendizaje.
+                </p>
+            </div>
+        </section>
+
+        <!-- Conclusión Personal -->
+        <section class="mt-16 bg-white rounded-3xl shadow-2xl p-8 text-center border-b-8 border-primary">
+            <h2 class="text-3xl font-bold text-primary mb-4">Conclusión Final</h2>
+            <p class="max-w-4xl mx-auto text-xl text-gray-700 leading-relaxed">
+                Ambos autores son cruciales: Vygotsky me enseña la importancia de **quién** nos acompaña en el proceso, y Ausubel, la necesidad de **por qué** y **cómo** le damos sentido a lo que aprendemos. Enseñar es un acto de conectar personas, ideas y contextos.
+            </p>
+        </section>
+
+        <!-- Referencias -->
+        <section class="mt-12 bg-gray-50 rounded-2xl shadow p-6 border-l-4 border-primary">
+            <h2 class="text-2xl font-bold text-primary mb-4">Referencias</h2>
+            <ul class="text-gray-700 space-y-3 list-disc pl-5 text-sm">
+                <li>Pineda, W. (2011). <em>La teoría de la mente en la educación desde el enfoque socio-histórico de Lev Vigotsky.</em> Educación y Humanismo, 13(20), 222–233. <a href="https://revistas.unisimon.edu.co/index.php/educacion/article/view/2292" target="_blank" class="text-primary hover:underline">https://revistas.unisimon.edu.co/index.php/educacion/article/view/2292</a></li>
+                <li>Yépez, M. (2011). <em>Aproximación a la comprensión del aprendizaje significativo de David Ausubel.</em> Revista Ciencias de la Educación, 21(37). <a href="http://servicio.bc.uc.edu.ve/educacion/revista/n37/art03.pdf" target="_blank" class="text-primary hover:underline">http://servicio.bc.uc.edu.ve/educacion/revista/n37/art03.pdf</a></li>
+                <li>Canva. (2025). <em>Aprende cómo hacer una infografía en 15 pasos sencillos.</em> <a href="https://www.canva.com/es_mx/aprende/que-es-una-infografia-como-se-hace/" target="_blank" class="text-primary hover:underline">https://www.canva.com/es_mx/aprende/que-es-una-infografia-como-se-hace/</a></li>
+            </ul>
+        </section>
+    </main>
+
+    <!-- Pie de Página -->
+    <footer class="text-center p-6 mt-12 bg-gray-200 text-sm text-gray-600">
+        <p>Infografía elaborada para el Módulo 4: Fundamentos Psicológicos del Aprendizaje.</p>
+        <p class="font-semibold mt-1">Universidad Rosario Castellanos. Octubre 2025.</p>
+    </footer>
+
+    <!-- Script de Gráficos (Chart.js) -->
+    <script>
+        // Se ejecuta solo cuando el DOM está completamente cargado
+        document.addEventListener('DOMContentLoaded', function() {
+            const colors = tailwind.config.theme.extend.colors;
+            
+            // Gráfico de la Zona de Desarrollo Próximo (Vygotsky)
+            new Chart(document.getElementById('zdpChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Puede hacerlo solo', 'Con ayuda (ZDP)', 'Aún no puede (Fuera de ZDP)'],
+                    datasets: [{
+                        data: [25, 50, 25], // Valores de ejemplo para ilustrar la ZDP
+                        backgroundColor: [colors.vygotsky, colors.primary, 'rgba(0,0,0,0.1)'],
+                        borderColor: 'white',
+                        borderWidth: 2
+                    }]
+                },
+                options: { 
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { 
+                        legend: { position: 'bottom' }, 
+                        title: { display: true, text: 'Niveles de Capacidad de Aprendizaje', font: { size: 16, weight: 'bold' } }
+                    }, 
+                    cutout: '70%' // Hace que se vea como un anillo (doughnut)
+                }
+            });
+
+            // Gráfico de Comparación de Tipos de Aprendizaje (Ausubel)
+            new Chart(document.getElementById('learningComparisonChart'), {
+                type: 'bar',
+                data: {
+                    labels: ['Retención a largo plazo', 'Transferencia de conocimiento', 'Profundidad de Comprensión'],
+                    datasets: [
+                        { label: 'Significativo', data: [90, 85, 95], backgroundColor: colors.ausubel, borderRadius: 4 },
+                        { label: 'Mecánico', data: [30, 20, 15], backgroundColor: colors.soft_light, borderRadius: 4 }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y', // Barras horizontales
+                    scales: { 
+                        x: { 
+                            beginAtZero: true, 
+                            max: 100,
+                            title: { display: true, text: 'Porcentaje de Eficacia' }
+                        },
+                        y: { 
+                            grid: { display: false }
+                        } 
+                    },
+                    plugins: { 
+                        legend: { position: 'bottom' },
+                        title: { display: true, text: 'Resultados del Aprendizaje (Estimado)', font: { size: 16, weight: 'bold' } }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
                 Por un lado, Vygotsky plantea que el aprendizaje se construye en interacción con otras personas. 
                 Por otro, Ausubel explica que el conocimiento nuevo cobra sentido cuando se relaciona con lo que ya sabemos.
             </p>
